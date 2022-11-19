@@ -8,10 +8,18 @@ const STORAGE_KEY = 'videoplayer-current-time';
 
 
 
-player.on('play', throttle(onPlay, 1000));
 
-function onPlay({ seconds }) {
-  localStorage.setItem(STORAGE_KEY, seconds);
-}
+function onTimePlayer()  {
+  player.getCurrentTime()
+    .then (function (seconds) {
+      localStorage.setItem(STORAGE_KEY, seconds)
+    })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
 
-player.setCurrentTime(localStorage.getItem(STORAGE_KEY));
+
+player.on('play', throttle(onTimePlayer, 1000));
+player.setCurrentTime(localStorage.getItem(STORAGE_KEY) || 0);
+
