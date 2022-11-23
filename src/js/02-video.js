@@ -20,6 +20,9 @@ function onTimePlayer()  {
     }
 
 
-player.on('play', throttle(onTimePlayer, 1000));
-player.setCurrentTime(localStorage.getItem(STORAGE_KEY) || 0);
+player.on('timeupdate', throttle(onTimePlayer, 1000));
+const currentTime = localStorage.getItem(STORAGE_KEY) || 0;
 
+player.setCurrentTime(currentTime).catch(function (error) {
+  console.log(error);
+});
