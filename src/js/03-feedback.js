@@ -16,7 +16,7 @@ function onSubmitForm(e) {
    e.preventDefault();
   consoleFormData(e.currentTarget);
 
-  if (localStorage = ""){
+  if (localStorage === ""){
     localStorage.removeItem(MEGA_KEY);
   }
     e.currentTarget.reset();
