@@ -15,6 +15,7 @@ getFromLocalStorage();
 function onSubmitForm(e) {
    e.preventDefault();
   consoleFormData(e.currentTarget);
+
     e.currentTarget.reset();
 }
 
@@ -26,6 +27,7 @@ function onInput (e) {
 
 
 function getFromLocalStorage() {
+  
   const storageItem = JSON.parse(localStorage.getItem(MEGA_KEY));
   if (!storageItem) return;
  Object.keys(storageItem).forEach(key => {
@@ -33,7 +35,7 @@ function getFromLocalStorage() {
 
   const element = form.querySelector(`[name="${key}"]`);
    element.value = storageItem[key];
- 
+     localStorage.removeItem(MEGA_KEY);
 });
  
 }
