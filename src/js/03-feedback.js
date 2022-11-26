@@ -6,35 +6,33 @@ const textareaForm = document.querySelector('.feedback-form textarea');
 
 form.addEventListener('submit', onSubmitForm);
 form.addEventListener('input', throttle(onInput, 500));
-document.addEventListener('DOMContentLoaded', onReload)
-
-const MEGA_KEY = 'formData';
-const formData = {};
 
 
+onReload()
 
-function onInput (e) {
-  formData[e.target.name] = e.target.value;
-  localStorage.setItem('formData', JSON.stringify(formData));
+ function onSubmitForm(e) {
+   e.preventDefault();
+  e.currentTarget.reset();
+  localStorage.removeItem('feedback-form-state');
 }
 
+
+function onInput() {
+ const formData = {};
+  formData.email = emailForm .value;
+  formData.message = textareaForm.value
+  localStorage.setItem('feedback-form-state', JSON.stringify(formData));
+}
+
+
 function onReload() {
-  let storageItem = localStorage.getItem(MEGA_KEY);
+  let storageItem = localStorage.getItem('feedback-form-state');
   if (storageItem) {
-    let StorageData = JSON.parse(storageItem);
-    emailForm.value = StorageData.email;
-    textareaForm.value = StorageData.message;
+    console.log(storageItem)
+    let parseData = JSON.parse(storageItem);
+    emailForm.value = parseData.email;
+    textareaForm.value = parseData.message;
   }
 }
 
-function consoleFormData(form) {
-  const feedbackData = Object.fromEntries(new FormData(form));
-  console.log( 'feedbackData', feedbackData);
-}
 
-function onSubmitForm(e) {
-   e.preventDefault();
-  consoleFormData(e.currentTarget);
-  e.currentTarget.reset();
-  localStorage.removeItem(MEGA_KEY);
-}
