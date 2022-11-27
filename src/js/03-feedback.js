@@ -10,7 +10,8 @@ form.addEventListener('input', throttle(onInput, 500));
 
 onReload()
 
- function onSubmitForm(e) {
+function onSubmitForm(e) {
+   console.log(JSON.parse(localStorage.getItem('feedback-form-state')))
    e.preventDefault();
   e.currentTarget.reset();
   localStorage.removeItem('feedback-form-state');
@@ -28,10 +29,10 @@ function onInput() {
 function onReload() {
   let storageItem = localStorage.getItem('feedback-form-state');
   if (storageItem) {
-    console.log(storageItem)
     let parseData = JSON.parse(storageItem);
     emailForm.value = parseData.email;
     textareaForm.value = parseData.message;
+      
   }
 }
 
